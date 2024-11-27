@@ -1,29 +1,40 @@
 <template>
   <div id="app" class="app-container">
     <aside class="sidebar">
-      <h2>医学数据可视化</h2>
+      <h2>艾兹海默症数据可视化</h2>
       <nav>
         <ul>
-          <li @click="selectChart('chart1')">血压变化</li>
-          <li @click="selectChart('chart2')">心率分布</li>
-          <li @click="selectChart('chart3')">年龄统计</li>
+          <li @click="selectChart('brainAnalysis')">脑部分析</li>
+          <li @click="selectChart('risk')">风险概率分布</li>
+          <li @click="selectChart('symptoms')">症状数据统计</li>
+          <li @click="selectChart('treatment')">治疗方式与分布</li>
         </ul>
       </nav>
     </aside>
     <main class="main-content">
-      <DataChart :chart-type="selectedChart" />
+      <component :is="currentComponent" />
     </main>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import DataChart from './components/DataChart.vue';
+import BrainAnalysis from './components/BrainAnalysis.vue';
+import RiskDistribution from './components/RiskDistribution.vue';
+import SymptomsChart from './components/SymptomsChart.vue';
+import TreatmentChart from './components/TreatmentChart.vue';
 
-const selectedChart = ref('chart1');
+const components = {
+  brainAnalysis: BrainAnalysis,
+  risk: RiskDistribution,
+  symptoms: SymptomsChart,
+  treatment: TreatmentChart,
+};
 
-const selectChart = (chart) => {
-  selectedChart.value = chart;
+const currentComponent = ref(components.brainAnalysis);
+
+const selectChart = (chartKey) => {
+  currentComponent.value = components[chartKey];
 };
 </script>
 
@@ -34,14 +45,14 @@ const selectChart = (chart) => {
 }
 
 .sidebar {
-  width: 200px;
+  width: 220px;
   background-color: #2c3e50;
   color: white;
   padding: 20px;
 }
 
 .sidebar h2 {
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 20px;
 }
 

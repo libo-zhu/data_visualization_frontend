@@ -23,7 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 
-#vscode
-.vscode
-
-node_modules
